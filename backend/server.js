@@ -4,13 +4,9 @@ const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
-
 
 // Middleware
-app.use(cors()); // Handling CORS
+app.use(cors()); // Enable CORS
 app.use(express.json()); // For parsing application/json
 
 // Connect to MongoDB
@@ -23,19 +19,6 @@ const noteSchema = new mongoose.Schema({
 });
 
 const Note = mongoose.model('Note', noteSchema);
-
-
-//corsOptions
-
-const corsOptions = {
-    origin: 'https://keeper-homework-9bs9.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Enable credentials (cookies, authorization headers)
-    optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-
 
 // API Endpoints
 
@@ -50,7 +33,6 @@ app.get('/notes', (req, res) => {
         });
 });
 
-
 // POST: Add a new note
 app.post('/notes', (req, res) => {
     const newNote = new Note({
@@ -63,15 +45,12 @@ app.post('/notes', (req, res) => {
         .catch(err => res.status(500).json({ error: err.message }));
 });
 
-
-
 // DELETE: Delete a note
 app.delete('/notes/:id', (req, res) => {
     Note.findOneAndDelete({ _id: req.params.id })
         .then(() => res.send('Note deleted successfully.'))
         .catch(err => res.status(500).send(err));
 });
-
 
 // Start the server
 app.listen(port, () => {
