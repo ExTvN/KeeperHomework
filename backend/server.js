@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const port = 3001; // Ensure this port is different from React's
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
+
 
 // Middleware
 app.use(cors()); // Handling CORS

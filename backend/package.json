@@ -1,0 +1,15 @@
+{
+  "name": "keeper-backend-app",
+  "version": "1.0.0",
+  "description": "Notes app backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Esteeven Cepeda",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
