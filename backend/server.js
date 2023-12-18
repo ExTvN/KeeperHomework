@@ -24,6 +24,19 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema);
 
+
+//corsOptions
+
+const corsOptions = {
+    origin: 'https://keeper-homework-9bs9.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable credentials (cookies, authorization headers)
+    optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
+
 // API Endpoints
 
 // GET: Retrieve all notes
