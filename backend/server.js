@@ -4,9 +4,16 @@ const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
 
 // Middleware
-app.use(cors()); // Enable CORS
+const corsOptions = {
+    origin: 'https://keeper-homework-9bs9-6kkefszly-extvns-projects.vercel.app', // Replace with your Vercel app's origin
+};
+
+app.use(cors(corsOptions)); // Handling CORS
 app.use(express.json()); // For parsing application/json
 
 // Connect to MongoDB
