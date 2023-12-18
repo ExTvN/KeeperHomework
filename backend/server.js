@@ -10,7 +10,7 @@ app.listen(port, () => {
 
 // Middleware
 const corsOptions = {
-    origin: 'https://keeper-homework-9bs9-6kkefszly-extvns-projects.vercel.app', // Replace with your Vercel app's origin
+    origin: 'https://keeper-homework-9bs9-6kkefszly-extvns-projects.vercel.app',
 };
 
 app.use(cors(corsOptions)); // Handling CORS
