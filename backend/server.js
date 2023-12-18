@@ -1,12 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 
 const app = express();
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
 
 // Middleware
 const corsOptions = {
@@ -27,39 +24,60 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema);
 
-// API Endpoints
-
-// GET: Retrieve all notes
-app.get('/notes', (req, res) => {
-    Note.find({})
-        .then(notes => {
-            res.send(notes);
-        })
-        .catch(err => {
-            res.status(500).send(err);
+// Create a function to find an available port
+function findAvailablePort(startPort, callback) {
+    const server = http.createServer();
+    server.listen(startPort, () => {
+        const port = server.address().port;
+        server.close(() => {
+            callback(port);
         });
-});
+    });
+    server.on('error', () => {
+        // If the port is already in use, try the next one
+        findAvailablePort(startPort + 1, callback);
+    });
+}
 
-// POST: Add a new note
-app.post('/notes', (req, res) => {
-    const newNote = new Note({
-        title: req.body.title,
-        content: req.body.content
+// Specify a starting port (e.g., 3000) or use 3000 as a default if none is available
+const startPort = process.env.PORT || 3000;
+
+// Find an available port and start the server
+findAvailablePort(startPort, (port) => {
+    // API Endpoints
+
+    // GET: Retrieve all notes
+    app.get('/notes', (req, res) => {
+        Note.find({})
+            .then(notes => {
+                res.send(notes);
+            })
+            .catch(err => {
+                res.status(500).send(err);
+            });
     });
 
-    newNote.save()
-        .then(() => res.json({ message: 'Successfully added a new note.' }))
-        .catch(err => res.status(500).json({ error: err.message }));
-});
+    // POST: Add a new note
+    app.post('/notes', (req, res) => {
+        const newNote = new Note({
+            title: req.body.title,
+            content: req.body.content
+        });
 
-// DELETE: Delete a note
-app.delete('/notes/:id', (req, res) => {
-    Note.findOneAndDelete({ _id: req.params.id })
-        .then(() => res.send('Note deleted successfully.'))
-        .catch(err => res.status(500).send(err));
-});
+        newNote.save()
+            .then(() => res.json({ message: 'Successfully added a new note.' }))
+            .catch(err => res.status(500).json({ error: err.message }));
+    });
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    // DELETE: Delete a note
+    app.delete('/notes/:id', (req, res) => {
+        Note.findOneAndDelete({ _id: req.params.id })
+            .then(() => res.send('Note deleted successfully.'))
+            .catch(err => res.status(500).send(err));
+    });
+
+    // Start the server on the dynamically found port
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
 });
