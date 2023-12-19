@@ -11,11 +11,7 @@ Description of your project goes here.
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-  - [Usage](#usage)
-  - [API Documentation](#api-documentation)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Acknowledgments](#acknowledgments)
+
 
 ## Introduction
 
