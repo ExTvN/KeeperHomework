@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-    origin: 'https://keeper-homework-9bs9-extvns-projects.vercel.app/',
+    origin: 'https://keeper-homework-9bs9-8edopxogl-extvns-projects.vercel.app/',
 };
 
 app.use(cors(corsOptions)); // Handling CORS
