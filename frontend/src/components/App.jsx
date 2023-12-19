@@ -27,7 +27,39 @@ function App() {
             });
     }, []);
 
-    // Rest of your code...
+    // Add a new note
+    const addNote = () => {
+        if (newNote.title.trim() !== "" && newNote.content.trim() !== "") {
+            fetch(`${process.env.REACT_APP_API_URL}/notes`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newNote),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the client-side state with the newly created note's _id
+                    setNotes([...notes, { ...newNote, _id: data._id }]);
+                    setNewNote({ title: "", content: "" }); // Reset form fields
+                })
+                .catch(err => console.error('Error adding note:', err));
+        }
+    };
+
+    // Delete a note
+    const deleteNote = (id) => {
+        fetch(`${process.env.REACT_APP_API_URL}/notes/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                // Remove the deleted note from the client-side state
+                setNotes(notes.filter((note) => note._id !== id));
+            })
+            .catch(err => console.error('Error deleting note:', err));
+    };
+
+
 
     return (
         <div>

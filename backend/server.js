@@ -24,7 +24,7 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema);
 
-// Create a function to find an available port
+// Function to find an available port
 function findAvailablePort(startPort, callback) {
     const server = http.createServer();
     server.listen(startPort, () => {
