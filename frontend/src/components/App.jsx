@@ -49,12 +49,12 @@ function App() {
 
     // Delete a note
     const deleteNote = (id) => {
-        fetch(`${process.env.REACT_APP_API_URL}/notes/${_id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/notes/${id}`, {
             method: 'DELETE',
         })
             .then(() => {
                 // Remove the deleted note from the client-side state
-                setNotes(notes.filter((note) => note._id !== _id));
+                setNotes(notes.filter((note) => note._id !== id));
             })
             .catch(err => console.error('Error deleting note:', err));
     };

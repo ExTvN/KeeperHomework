@@ -14,7 +14,7 @@ app.use(cors(corsOptions)); // Handling CORS
 app.use(express.json()); // For parsing application/json
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://enc2129:Este163420@cluster0.otyk3fe.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://enc2129:hidden@cluster0.otyk3fe.mongodb.net/?retryWrites=true&w=majority');
 
 // MongoDB Schema and Model
 const noteSchema = new mongoose.Schema({
