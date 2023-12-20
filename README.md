@@ -1,6 +1,5 @@
 # KeeperHomework Final
 
-Description of your project goes here.
 
 ## Table of Contents
 
